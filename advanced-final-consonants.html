@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Consonants — Advanced Pronunciation</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#06091a;overflow:hidden;height:100vh;width:100vw}
+#app{width:100vw;height:100vh;display:flex;flex-direction:column}
+#progress{position:fixed;top:0;left:0;height:5px;background:linear-gradient(90deg,#4527A0,#9575CD);z-index:99;transition:width .3s ease;border-radius:0 3px 3px 0}
+#slides{flex:1;position:relative;overflow:hidden;min-height:0}
+.slide{position:absolute;inset:0;display:none;flex-direction:column}
+.slide.active{display:flex}
+
+/* NAV */
+#nav{height:48px;background:#060714;display:flex;align-items:center;justify-content:center;gap:14px;flex-shrink:0;border-top:1px solid rgba(255,255,255,.08)}
+#nav button{background:rgba(255,255,255,.1);border:none;color:#fff;font-size:13px;padding:6px 20px;border-radius:20px;cursor:pointer;transition:background .2s;font-family:inherit;letter-spacing:.3px}
+#nav button:hover{background:rgba(255,255,255,.22)}
+#nav button:disabled{opacity:.25;cursor:default}
+#counter{color:rgba(255,255,255,.45);font-size:12px;min-width:60px;text-align:center}
+
+/* SHARED */
+.s-head{padding:12px 30px;font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px;flex-shrink:0;letter-spacing:.2px}
+.badge{background:rgba(255,255,255,.16);border-radius:20px;padding:3px 11px;font-size:11px;font-weight:600}
+.s-body{flex:1;display:flex;padding:0 26px 12px;gap:22px;min-height:0;overflow:hidden}
+.student-badge{background:#4527A0;color:#fff;border-radius:20px;padding:4px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;flex-shrink:0}
+.hl{color:#9575CD;font-weight:900}
+.unrel{display:inline-block;background:#4527A0;color:#fff;border-radius:5px;padding:1px 7px;font-size:.9em;font-weight:700}
+.flap{display:inline-block;background:#7B1FA2;color:#fff;border-radius:5px;padding:1px 7px;font-size:.9em;font-weight:700}
+
+/* TITLE */
+.title-slide{background:linear-gradient(140deg,#06091a 0%,#0f0520 55%,#06091a 100%);align-items:center;justify-content:center;text-align:center}
+.title-slide h1{font-size:clamp(28px,4.5vw,62px);font-weight:900;color:#fff;line-height:1;letter-spacing:-2px}
+.title-slide h1 em{font-style:normal;background:linear-gradient(90deg,#7E57C2,#CE93D8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.title-sub{font-size:clamp(13px,1.7vw,19px);color:rgba(255,255,255,.6);margin-top:12px}
+.goal-box{margin-top:22px;background:rgba(69,39,160,.09);border:1.5px solid rgba(69,39,160,.4);border-radius:16px;padding:16px 28px;display:inline-block;text-align:left}
+.goal-box p{color:#D1C4E9;font-size:clamp(13px,1.5vw,17px);line-height:1.75}
+.adv-badge{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 16px;font-size:clamp(11px,1.2vw,13px);color:rgba(255,255,255,.5);margin-bottom:14px;letter-spacing:1px;text-transform:uppercase}
+
+/* WARM-UP */
+.warmup-slide{background:#fff;flex-direction:column}
+.warmup-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 40px;gap:16px}
+.warmup-prompt{background:#EDE7F6;border-left:5px solid #4527A0;border-radius:0 14px 14px 0;padding:16px 22px;font-size:clamp(13px,1.6vw,18px);font-weight:600;color:#311B92;max-width:820px;width:100%;line-height:1.65}
+.warmup-words{display:flex;gap:14px;flex-wrap:wrap;max-width:820px;width:100%}
+.warmup-word{background:#EDE7F6;border:2px solid rgba(69,39,160,.25);border-radius:12px;padding:14px 22px;text-align:center;flex:1;min-width:140px}
+.ww-text{font-size:clamp(20px,2.8vw,34px);font-weight:900;color:#1a1a1a}
+.ww-q{font-size:clamp(10px,1.1vw,12px);color:#888;margin-top:5px}
+.warmup-q{background:#F3E5F5;border-radius:10px;padding:10px 16px;font-size:clamp(12px,1.4vw,15px);color:#4A148C;border:1.5px solid #CE93D8;max-width:820px;width:100%}
+.teacher-note{background:#EDE7F6;border:1px solid #B39DDB;border-radius:10px;padding:10px 18px;font-size:clamp(11px,1.25vw,14px);color:#4527A0;max-width:820px;width:100%;line-height:1.6}
+
+/* KEY CONCEPT */
+.concept-slide{background:#fff;flex-direction:column}
+.concept-body{flex:1;display:flex;flex-direction:column;gap:12px;padding:14px 26px;min-height:0}
+.concept-cols{display:flex;gap:14px;flex:1;min-height:0}
+.concept-col{border-radius:14px;padding:14px 18px;flex:1;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.cc-title{font-size:clamp(13px,1.5vw,17px);font-weight:900;margin-bottom:2px}
+.cc-body{font-size:clamp(11px,1.25vw,13px);line-height:1.65;color:#444}
+.cc-ex-row{display:flex;flex-direction:column;gap:6px}
+.cc-ex{background:#fff;border-radius:8px;padding:8px 12px;border:1.5px solid #eee;font-size:clamp(12px,1.35vw,15px);line-height:1.6}
+.concept-rule{background:#EDE7F6;border-radius:12px;padding:11px 18px;font-size:clamp(12px,1.3vw,15px);color:#311B92;font-weight:600;text-align:center;flex-shrink:0}
+
+/* SPOT IT */
+.spot-slide{background:#f8f9fa;flex-direction:column}
+.spot-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;overflow-y:auto}
+.spot-box{background:#fff;border-radius:12px;padding:12px 16px;border:1.5px solid #e0e0e0;display:flex;flex-direction:column;gap:6px}
+.spot-phrase{font-size:clamp(18px,2.4vw,30px);font-weight:900;color:#222;padding:4px 0;letter-spacing:1px}
+.spot-q{font-size:clamp(11px,1.2vw,13px);color:#888;font-style:italic}
+.spot-reveal-btn{align-self:flex-start;background:#4527A0;color:#fff;border:none;border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;cursor:pointer;transition:background .2s}
+.spot-reveal-btn:hover{background:#311B92}
+.spot-ans{display:none;background:#EDE7F6;border-radius:8px;padding:10px 12px;flex-direction:column;gap:4px}
+.spot-ans.open{display:flex}
+.spot-ans-title{font-size:clamp(12px,1.3vw,15px);font-weight:700;color:#311B92}
+.spot-hint{font-size:clamp(10px,1.1vw,12px);color:#555;line-height:1.5}
+
+/* TRY IT */
+.tryit-slide{background:#f8f9fa;flex-direction:column}
+.tryit-groups{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;overflow-y:auto}
+.tryit-group{background:#fff;border-radius:12px;padding:14px 18px;border:1.5px solid #e0e0e0;display:flex;flex-direction:column;gap:8px}
+.tg-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:20px;align-self:flex-start;color:#fff}
+.tg-words{display:flex;flex-wrap:wrap;gap:8px}
+.tg-word{font-size:clamp(14px,1.7vw,20px);font-weight:700;color:#222;background:#f5f5f5;border-radius:8px;padding:5px 14px}
+
+/* TRY IT #2 */
+.tryit2-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;overflow-y:auto}
+.tryit2-card{background:#fff;border-radius:12px;padding:12px 16px;border:1.5px solid #e0e0e0;display:flex;flex-direction:column;gap:5px}
+.t2-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#4527A0;opacity:.8}
+.t2-word{font-size:clamp(18px,2.4vw,30px);font-weight:900;color:#222}
+.t2-ipa{font-size:clamp(13px,1.5vw,18px);color:#4527A0;font-weight:600}
+.t2-note{font-size:clamp(10px,1.1vw,12px);color:#888;font-style:italic}
+
+/* ROLE-PLAY */
+.roleplay-slide{background:#0f0520;flex-direction:column}
+.rp-body{flex:1;display:flex;flex-direction:column;gap:10px;padding:12px 26px 12px;min-height:0;overflow:hidden}
+.rp-scenario{background:rgba(255,255,255,.06);border-radius:12px;padding:10px 18px;font-size:clamp(12px,1.3vw,14px);color:rgba(255,255,255,.75);flex-shrink:0;line-height:1.5}
+.rp-cols{display:grid;grid-template-columns:3fr 2fr;gap:14px;flex:1;min-height:0;overflow:hidden}
+.rp-col{background:rgba(255,255,255,.04);border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:5px;overflow-y:auto}
+.rp-col-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px;flex-shrink:0;color:#CE93D8}
+.rp-line{padding:5px 8px;border-radius:8px;display:flex;flex-direction:column;gap:2px}
+.rp-line.teacher{background:rgba(255,255,255,.04)}
+.rp-line.student{background:rgba(69,39,160,.25);border:1px solid rgba(149,117,205,.35)}
+.rp-speaker{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.5;color:#fff}
+.rp-text{font-size:clamp(11px,1.35vw,14px);color:#fff;line-height:1.6}
+.rp-text .hl{color:#CE93D8}
+.rp-tip{background:rgba(69,39,160,.15);border:1px solid rgba(149,117,205,.3);border-radius:10px;padding:8px 14px;font-size:clamp(11px,1.2vw,13px);color:#CE93D8;flex-shrink:0}
+.rp-tips-list{display:flex;flex-direction:column;gap:8px;font-size:clamp(11px,1.25vw,13px);color:rgba(255,255,255,.7)}
+
+/* BUILD IT */
+.build-slide{background:#fff;flex-direction:column}
+.build-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 40px;gap:16px;overflow-y:auto}
+.build-prompt{background:#EDE7F6;border-radius:14px;padding:18px 26px;max-width:760px;width:100%;text-align:center}
+.build-prompt h2{font-size:clamp(15px,1.9vw,22px);font-weight:800;color:#311B92;margin-bottom:8px}
+.build-prompt p{font-size:clamp(12px,1.4vw,16px);color:#4527A0;line-height:1.6}
+.build-targets{display:flex;gap:14px;max-width:760px;width:100%}
+.build-target{border-radius:12px;padding:14px 18px;flex:1;border:1.5px solid}
+.bt-sound{font-size:clamp(22px,3vw,38px);font-weight:900;line-height:1}
+.bt-label{font-size:clamp(11px,1.2vw,14px);font-weight:700;margin-top:4px}
+.bt-ex{font-size:clamp(10px,1.1vw,12px);color:#666;margin-top:5px;line-height:1.5}
+
+/* QUIZ */
+.quizq-slide{background:#f8f9fa;flex-direction:column}
+.q-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 14px;width:100%}
+.q-box{background:#fff;border-radius:12px;padding:12px 16px;border:1.5px solid #e0e0e0;display:flex;flex-direction:column;gap:5px}
+.q-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#4527A0;opacity:.8}
+.q-text{font-size:clamp(12px,1.3vw,15px);font-weight:600;color:#222;line-height:1.45}
+.q-opts{display:flex;flex-direction:column;gap:3px}
+.q-opt{font-size:clamp(11px,1.15vw,13px);color:#555;padding:2px 0;line-height:1.4}
+.q-reveal-btn{align-self:flex-start;background:#4527A0;color:#fff;border:none;border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;cursor:pointer;transition:background .2s;margin-top:2px}
+.q-reveal-btn:hover{background:#311B92}
+.q-ans-reveal{display:none;background:#EDE7F6;border-radius:8px;padding:8px 12px;margin-top:4px}
+.q-ans-reveal.open{display:block}
+.qr-opts{display:flex;flex-direction:column;gap:3px;margin-bottom:5px}
+.qr-opt{font-size:clamp(11px,1.15vw,13px);color:#555;padding:2px 6px;border-radius:5px}
+.qr-opt.correct{background:#4527A0;color:#fff;font-weight:700}
+.qr-hint{font-size:clamp(10px,1.1vw,12px);color:#311B92;line-height:1.5}
+.think-banner{background:#EDE7F6;border-radius:10px;padding:8px 16px;font-size:clamp(12px,1.3vw,14px);color:#311B92;font-weight:600;flex-shrink:0}
+
+/* SUMMARY */
+.summary-slide{background:linear-gradient(140deg,#06091a 0%,#0f0520 55%,#06091a 100%);flex-direction:column}
+.sum-cards{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.sum-card{border-radius:16px;padding:20px 22px;min-width:180px;max-width:260px;flex:1}
+.sum-card-icon{font-size:clamp(26px,3.5vw,42px);margin-bottom:8px}
+.sum-card-title{font-size:clamp(13px,1.5vw,18px);font-weight:800;color:#fff;margin-bottom:6px;line-height:1.3}
+.sum-card-body{font-size:clamp(11px,1.2vw,13px);color:rgba(255,255,255,.7);line-height:1.5}
+.sum-foot{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 22px;font-size:clamp(12px,1.3vw,14px);color:rgba(255,255,255,.6);text-align:center;max-width:720px}
+
+/* FREE CONV */
+.freeconv-slide{background:#0f0520;flex-direction:column}
+.fc-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 40px;gap:14px}
+.fc-badge{background:rgba(69,39,160,.3);border:1px solid rgba(149,117,205,.5);border-radius:20px;padding:4px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#CE93D8}
+.fc-topic{font-size:clamp(22px,3.5vw,46px);font-weight:900;color:#fff;letter-spacing:-1px}
+.fc-questions{display:flex;flex-direction:column;gap:8px;width:100%;max-width:720px}
+.fc-q{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 16px;font-size:clamp(13px,1.5vw,16px);color:rgba(255,255,255,.8);line-height:1.55}
+.fc-note{font-size:clamp(11px,1.2vw,13px);color:rgba(255,255,255,.4);text-align:center;max-width:680px;line-height:1.6}
+.fc-teacher{background:rgba(69,39,160,.1);border:1px solid rgba(149,117,205,.25);border-radius:10px;padding:10px 16px;font-size:clamp(11px,1.2vw,13px);color:#CE93D8;max-width:720px;width:100%;line-height:1.6}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="progress"></div>
+  <div id="slides"></div>
+  <div id="nav">
+    <button id="prevBtn" onclick="move(-1)">◀ Back</button>
+    <span id="counter"></span>
+    <button id="nextBtn" onclick="move(1)">Next ▶</button>
+  </div>
+</div>
+<script>
+// ═══════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════
+const SPOT = [
+  {phrase:'black cat',target:'black',
+   ans:'Unreleased /k/ <span class="unrel">✋ hold</span>',
+   hint:'The /k/ at the end of "black" comes before another consonant (/k/ of "cat"). Native speakers form the /k/ position but don\'t release the air burst — the sounds merge smoothly.'},
+  {phrase:'hot day',target:'hot',
+   ans:'Unreleased /t/ <span class="unrel">✋ hold</span>',
+   hint:'The /t/ at the end of "hot" is held before the /d/ of "day". No burst — the tongue goes to the /t/ position and stays there briefly before moving to /d/.'},
+  {phrase:'good morning',target:'good',
+   ans:'Unreleased /d/ <span class="unrel">✋ hold</span>',
+   hint:'Final /d/ before /m/ — the tongue tip touches the ridge behind your teeth, holds, then releases directly into the /m/. No separate "duh" sound.'},
+  {phrase:'water bottle',target:'wa<span class="flap">ɾ</span>er',
+   ans:'Flapped /t/ <span class="flap">ɾ</span> (American)',
+   hint:'In American English, /t/ between two vowels becomes a quick flap — almost like a soft /d/. "Water" sounds like "wa-der". Same with "bottle" → "bo-dle".'},
+  {phrase:'big screen',target:'big',
+   ans:'Unreleased /g/ <span class="unrel">✋ hold</span>',
+   hint:'Final /g/ before /s/ — the back of the tongue touches the soft palate and holds. The air is blocked, not released. Then you move straight into the /s/ of "screen".'},
+  {phrase:'what time',target:'what',
+   ans:'Glottal stop /ʔ/ or unreleased /t/ <span class="unrel">✋</span>',
+   hint:'In casual speech, the /t/ in "what" (before a consonant) often becomes a glottal stop — a brief closing in the throat. "Wha[ʔ] time?" is very natural in fast speech.'},
+];
+
+const TRY1 = [
+  {label:'Final /t/',color:'#4527A0',words:['hot','what','that','right','night','sit','it','get']},
+  {label:'Final /d/',color:'#6A1B9A',words:['good','bad','said','red','hard','old','and','found']},
+  {label:'Final /k/',color:'#311B92',words:['back','black','work','week','think','take','look','book']},
+  {label:'Final /p/',color:'#4A148C',words:['stop','cap','app','up','keep','sleep','help','group']},
+];
+
+const TRY2 = [
+  {word:'water',    ipa:'/ˈwɔːɾər/',  note:'wa-[ɾ]-er — the t becomes a quick tap'},
+  {word:'better',   ipa:'/ˈbɛɾər/',   note:'be-[ɾ]-er — much faster than a full /t/'},
+  {word:'city',     ipa:'/ˈsɪɾi/',    note:'ci-[ɾ]-y — sounds almost like "siddy"'},
+  {word:'meeting',  ipa:'/ˈmiːɾɪŋ/',  note:'mee-[ɾ]-ing — the middle t flaps'},
+  {word:'bottle',   ipa:'/ˈbɑːɾl/',   note:'bo-[ɾ]-le — or even a glottal: bo[ʔ]l'},
+  {word:'butter',   ipa:'/ˈbʌɾər/',   note:'bu-[ɾ]-er — same pattern as water/better'},
+  {word:'thirty',   ipa:'/ˈθɜːɾi/',   note:'thir-[ɾ]-y — the t between vowels flaps'},
+  {word:'internet', ipa:'/ˈɪnɾənɛɾ/', note:'in-[ɾ]-er-ne-[ɾ] — two flaps!'},
+];
+
+const ROLEPLAY = [
+  {role:'teacher',label:'Teacher',text:'"Hi, welcome! What can I get for you today?"'},
+  {role:'student',label:'Student',text:'Could I ge<span class="hl">t</span> a ho<span class="hl">t</span> coffee, please? A fla<span class="hl">t</span> white.'},
+  {role:'teacher',label:'Teacher',text:'"Of course. What size — small, medium, or large?"'},
+  {role:'student',label:'Student',text:'Medi<span class="hl">um</span>, thanks. Oh, an<span class="hl">d</span> coul<span class="hl">d</span> I also ge<span class="hl">t</span> a cho<span class="hl">c</span>olate muffin?'},
+  {role:'teacher',label:'Teacher',text:'"Sure! That\'s a flat white and a chocolate muffin. Anything else?"'},
+  {role:'student',label:'Student',text:'Tha<span class="hl">t</span>\'s all, thank you. Oh — actu<span class="hl">ally</span>, coul<span class="hl">d</span> I ge<span class="hl">t</span> some extra napkins?'},
+  {role:'teacher',label:'Teacher',text:'"Of course! That\'ll be £6.50. Are you paying by card?"'},
+  {role:'student',label:'Student',text:'Yes, car<span class="hl">d</span> please. Contac<span class="hl">t</span>less if that\'s alrigh<span class="hl">t</span>.'},
+  {role:'teacher',label:'Teacher',text:'"Perfect. I\'ll have that ready in just a moment!"'},
+  {role:'student',label:'Student',text:'Grea<span class="hl">t</span>, thank<span class="hl">s</span> a lo<span class="hl">t</span>!'},
+];
+
+const QUIZ = [
+  {q:'What is an "unreleased stop"?',
+   opts:['a) A consonant that is never pronounced','b) A stop consonant where the mouth position is formed but the air burst is held back','c) A vowel that becomes shorter','d) A consonant that disappears in fast speech'],
+   ans:1,hint:'An unreleased stop = you form the mouth shape for /t/, /d/, /k/, /g/, /p/, or /b/, but you don\'t let the air burst out. The closure is there — the explosion isn\'t.'},
+  {q:'In "black coffee", the /k/ at the end of "black" is most likely:',
+   opts:['a) Fully released with a clear burst','b) Replaced by /g/','c) Unreleased — held before the /k/ of "coffee"','d) Dropped completely — not pronounced at all'],
+   ans:2,hint:'Before another consonant, final stops are almost always unreleased. Your tongue/lips form the /k/ position and hold it, then move straight into the /k/ of "coffee".'},
+  {q:'In American English, the /t/ in "water" sounds like:',
+   opts:['a) A clear /t/ as in "top"','b) A soft /d/ sound (flap /ɾ/)','c) Completely silent','d) A glottal stop /ʔ/ only'],
+   ans:1,hint:'Between two vowels in American English, /t/ becomes a flap /ɾ/ — a very quick tap that sounds almost like a soft /d/. "water" → /ˈwɔːɾər/. This is called t-flapping.'},
+  {q:'Which of these has a flapped /t/ in natural American speech?',
+   opts:['a) "top"','b) "stop"','c) "city"','d) "mistake"'],
+   ans:2,hint:'"City" → /ˈsɪɾi/ — the /t/ sits between two vowels, so it flaps. "Top" and "stop" have /t/ at the start (no flapping). "Mistake" has /t/ after a consonant (no flapping).'},
+  {q:'What is a glottal stop /ʔ/?',
+   opts:['a) A type of vowel sound','b) A brief closing of the throat that replaces /t/ in casual speech','c) When /t/ becomes /d/','d) When a consonant is doubled'],
+   ans:1,hint:'A glottal stop /ʔ/ is when you briefly close the airway in your throat. In casual speech, /t/ before a consonant (or at the end of an utterance) can become /ʔ/. E.g., "what time" → "wha[ʔ] time".'},
+  {q:'Say "good morning" naturally. The final /d/ of "good" is:',
+   opts:['a) Clearly released before /m/','b) Replaced by /t/','c) Held (unreleased) before the /m/','d) Completely silent — the /d/ disappears'],
+   ans:2,hint:'The /d/ is unreleased — you form the /d/ position (tongue tip at ridge), hold it briefly, then move straight into /m/. There\'s no "duh" burst. This makes "good morning" flow smoothly.'},
+];
+
+// ═══════════════════════════════════════════
+//  BUILDERS
+// ═══════════════════════════════════════════
+function titleHTML(){
+  return `<div class="slide title-slide">
+  <div style="max-width:820px;padding:18px;text-align:center">
+    <div class="adv-badge">Advanced Pronunciation</div>
+    <h1><em>Final Consonants</em></h1>
+    <div style="font-size:clamp(16px,2.5vw,28px);font-weight:700;color:rgba(255,255,255,.45);margin-top:4px">（語尾の発音）</div>
+    <p class="title-sub">Hold it, tap it, or swallow it — what really happens at the end of a word?</p>
+    <div class="goal-box">
+      <p>🎯 <strong>Today's Goal:</strong> Understand unreleased stops, t-flapping, and glottal stops — and use them for more natural-sounding speech</p>
+      <p style="margin-top:4px">⏱ 45 minutes &nbsp;·&nbsp; 11 slides &nbsp;·&nbsp; Use ◀ ▶ or arrow keys to navigate</p>
+    </div>
+  </div></div>`;
+}
+
+function warmupHTML(){
+  return `<div class="slide warmup-slide">
+  <div class="s-head" style="background:#4527A0">Warm-Up <span class="badge">You first! 🗣️</span> <span class="student-badge">Student · 3 min</span></div>
+  <div class="warmup-body">
+    <div class="warmup-prompt">Say these words naturally, then answer: does the final consonant sound "clean" or does something different happen?</div>
+    <div class="warmup-words">
+      <div class="warmup-word"><div class="ww-text">hot</div><div class="ww-q">Is the /t/ a clear "tuh"?</div></div>
+      <div class="warmup-word"><div class="ww-text">water</div><div class="ww-q">Is the /t/ a "tuh" or something else?</div></div>
+      <div class="warmup-word"><div class="ww-text">black bag</div><div class="ww-q">What happens between the two words?</div></div>
+      <div class="warmup-word"><div class="ww-text">good</div><div class="ww-q">Can you really hear the /d/?</div></div>
+    </div>
+    <div class="warmup-q">💬 Did any of them surprise you? Which final consonant was hardest to hear clearly?</div>
+    <div class="teacher-note">📝 <strong>Teacher note:</strong> Most students will say all final consonants clearly — like reading. Let them try, then play or imitate a natural version. Ask: "Did you hear a burst of air at the end of 'hot'?" The answer in natural speech is often: barely, or no!</div>
+  </div></div>`;
+}
+
+function conceptHTML(){
+  return `<div class="slide concept-slide">
+  <div class="s-head" style="background:#4527A0">Key Concept — 3 Patterns for Final Consonants <span class="badge">Teacher · 2 min</span></div>
+  <div class="concept-body">
+    <div class="concept-cols">
+      <div class="concept-col" style="background:#EDE7F6;border:2px solid rgba(69,39,160,.25)">
+        <div class="cc-title" style="color:#311B92">① Unreleased Stop <span class="unrel">✋</span></div>
+        <div class="cc-body">Stop consonants (<strong>p b t d k g</strong>) at the end of a word — especially before another consonant — are <strong>held but not released</strong>. You form the mouth position, but no air burst comes out.</div>
+        <div class="cc-ex-row">
+          <div class="cc-ex">"bla<strong>ck</strong> coffee" → /k/ held, no pop</div>
+          <div class="cc-ex">"goo<strong>d</strong> morning" → /d/ held, into /m/</div>
+          <div class="cc-ex">"ho<strong>t</strong> dog" → /t/ held, into /d/</div>
+        </div>
+      </div>
+      <div class="concept-col" style="background:#F3E5F5;border:2px solid rgba(106,27,154,.2)">
+        <div class="cc-title" style="color:#4A148C">② T-Flapping <span class="flap">ɾ</span> <span style="font-size:.7em;font-weight:500;color:#888">（American English）</span></div>
+        <div class="cc-body">In American English, <strong>/t/ between two vowels</strong> becomes a quick flap /ɾ/ — almost like a soft, fast /d/. The tongue just taps the ridge lightly.</div>
+        <div class="cc-ex-row">
+          <div class="cc-ex">"wa<strong>t</strong>er" → /ˈwɔːɾər/ (like "wa-der")</div>
+          <div class="cc-ex">"be<strong>tt</strong>er" → /ˈbɛɾər/</div>
+          <div class="cc-ex">"ci<strong>t</strong>y" → /ˈsɪɾi/ (like "siddy")</div>
+        </div>
+      </div>
+      <div class="concept-col" style="background:#EDE7F6;border:2px solid rgba(49,27,146,.2)">
+        <div class="cc-title" style="color:#311B92">③ Glottal Stop /ʔ/</div>
+        <div class="cc-body">In casual speech, /t/ before a consonant or at the end of a phrase can become a <strong>glottal stop</strong> — a brief catch in the throat. Very common in informal British English; also heard in American.</div>
+        <div class="cc-ex-row">
+          <div class="cc-ex">"wha<strong>t</strong> time?" → "wha[ʔ] time?"</div>
+          <div class="cc-ex">"bu<strong>tt</strong>on" → "bu[ʔ]n"</div>
+          <div class="cc-ex">"impor<strong>t</strong>ant" → "impor[ʔ]ant"</div>
+        </div>
+      </div>
+    </div>
+    <div class="concept-rule">💡 Key rule: Final consonants are rarely "clean". They get <strong>held, tapped, or caught in the throat</strong> — and that's what makes speech sound natural!</div>
+  </div></div>`;
+}
+
+function spotHTML(){
+  const boxes = SPOT.map((s,i)=>{
+    const id=`spot-${i}`;
+    return `<div class="spot-box">
+      <div class="spot-phrase">${s.phrase}</div>
+      <div class="spot-q">What happens to the final consonant of "<strong>${s.target}</strong>"?</div>
+      <button class="spot-reveal-btn" onclick="toggleAns(this,'${id}')">▼ 答えを見る</button>
+      <div class="spot-ans" id="${id}">
+        <div class="spot-ans-title">${s.ans}</div>
+        <div class="spot-hint">${s.hint}</div>
+      </div>
+    </div>`;
+  }).join('');
+  return `<div class="slide spot-slide">
+  <div class="s-head" style="background:#4527A0">Spot It — What happens to the final sound? <span class="badge">Student 🗣️</span></div>
+  <div class="s-body" style="flex-direction:column;gap:8px">
+    <div style="font-size:clamp(12px,1.4vw,14px);color:#555;flex-shrink:0">Say each phrase naturally. Decide: is the final consonant <span class="unrel">unreleased</span>, a <span class="flap">flap</span>, or a glottal stop? Then check.</div>
+    <div class="spot-grid">${boxes}</div>
+  </div></div>`;
+}
+
+function tryit1HTML(){
+  const groups = TRY1.map(g=>`
+    <div class="tryit-group">
+      <div class="tg-label" style="background:${g.color}">${g.label}</div>
+      <div style="font-size:clamp(10px,1.1vw,12px);color:#888;margin-bottom:2px">Hold the final consonant — no air burst. Feel the position, then release into the next word.</div>
+      <div class="tg-words">
+        ${g.words.map(w=>`<div class="tg-word">${w}</div>`).join('')}
+      </div>
+    </div>`).join('');
+  return `<div class="slide tryit-slide">
+  <div class="s-head" style="background:#4527A0">Try It #1 — Unreleased Stops <span class="unrel">✋</span> <span class="badge">Student 🗣️</span></div>
+  <div class="s-body" style="flex-direction:column;gap:8px">
+    <div style="font-size:clamp(12px,1.4vw,14px);color:#555;flex-shrink:0">Say each word, then hold the final consonant — <strong>form the shape, but don't pop</strong>. Try linking to the next word naturally.</div>
+    <div class="tryit-groups">${groups}</div>
+  </div></div>`;
+}
+
+function tryit2HTML(){
+  const cards = TRY2.map((t,i)=>`
+    <div class="tryit2-card">
+      <div class="t2-num">Word ${i+1}</div>
+      <div class="t2-word">${t.word}</div>
+      <div class="t2-ipa">${t.ipa} <span class="flap">ɾ</span></div>
+      <div class="t2-note">${t.note}</div>
+    </div>`).join('');
+  return `<div class="slide tryit-slide">
+  <div class="s-head" style="background:#6A1B9A">Try It #2 — T-Flapping <span class="flap">ɾ</span> <span class="badge">Student 🗣️</span></div>
+  <div class="s-body" style="flex-direction:column;gap:8px">
+    <div style="font-size:clamp(12px,1.4vw,14px);color:#555;flex-shrink:0">In American English, /t/ between vowels = a fast tap <span class="flap">ɾ</span>. Say each word — <strong>don't tap your tongue too hard!</strong> Light and quick.</div>
+    <div class="tryit2-grid">${cards}</div>
+  </div></div>`;
+}
+
+function roleplayHTML(){
+  const lines = ROLEPLAY.map(l=>`
+    <div class="rp-line ${l.role}">
+      <div class="rp-speaker">${l.label}</div>
+      <div class="rp-text">${l.text}</div>
+    </div>`).join('');
+  return `<div class="slide roleplay-slide">
+  <div class="s-head" style="background:#1a0a30">Role-Play ☕ At the Café <span class="badge">Student leads · 8 min</span></div>
+  <div class="rp-body">
+    <div class="rp-scenario">📍 <strong>Scenario:</strong> Ordering at a café. The student is the customer. <span style="color:#CE93D8;font-weight:700">Purple highlights</span> = words with key final consonant sounds. Focus on making them natural!</div>
+    <div class="rp-cols">
+      <div class="rp-col">
+        <div class="rp-col-label">Dialogue</div>
+        ${lines}
+      </div>
+      <div class="rp-col">
+        <div class="rp-col-label">Focus Points</div>
+        <div class="rp-tips-list">
+          <div><span class="unrel">✋</span> "get", "hot", "flat" — hold the /t/, no pop</div>
+          <div><span class="unrel">✋</span> "and", "could" — hold the /d/</div>
+          <div><span class="flap">ɾ</span> "chocolate" — the /t/ flaps lightly</div>
+          <div>🔄 Round 2: Try the student's lines without looking — improvise naturally!</div>
+          <div>🎯 Challenge: Add one extra request of your own to the order!</div>
+        </div>
+      </div>
+    </div>
+    <div class="rp-tip">🌟 Teacher: listen for whether the student releases the final /t/ and /d/ cleanly (textbook style) or holds them (natural style). Natural is the goal!</div>
+  </div></div>`;
+}
+
+function buildHTML(){
+  return `<div class="slide build-slide">
+  <div class="s-head" style="background:#4527A0">Build It 🔨 — Use all 3 patterns! <span class="badge">Student 🗣️ · 5 min</span></div>
+  <div class="build-body">
+    <div class="build-prompt">
+      <h2>Make 3 sentences — one for each pattern!</h2>
+      <p>Use words with final consonants naturally. The teacher listens and gives a thumbs up when it sounds native!</p>
+    </div>
+    <div class="build-targets">
+      <div class="build-target" style="background:#EDE7F6;border-color:rgba(69,39,160,.3)">
+        <div class="bt-sound" style="color:#4527A0">✋</div>
+        <div class="bt-label" style="color:#311B92">Unreleased stop</div>
+        <div class="bt-ex">Use a word ending in t/d/k/p before another consonant.<br><em>e.g. "I had a good time."</em></div>
+      </div>
+      <div class="build-target" style="background:#F3E5F5;border-color:rgba(106,27,154,.25)">
+        <div class="bt-sound" style="color:#6A1B9A"><span class="flap" style="font-size:.7em">ɾ</span></div>
+        <div class="bt-label" style="color:#4A148C">T-flapping</div>
+        <div class="bt-ex">Use a word with /t/ between vowels.<br><em>e.g. "The water was really cold."</em></div>
+      </div>
+      <div class="build-target" style="background:#EDE7F6;border-color:rgba(49,27,146,.2)">
+        <div class="bt-sound" style="color:#311B92">ʔ</div>
+        <div class="bt-label" style="color:#311B92">Glottal stop</div>
+        <div class="bt-ex">Use "what", "that", "button", or "important" naturally.<br><em>e.g. "What time does it start?"</em></div>
+      </div>
+    </div>
+    <div class="teacher-note">📝 <strong>Teacher note:</strong> Don't correct every instance — listen for the overall naturalness. If the student produces a clear /t/ burst where it should be unreleased, gently model and ask them to copy. One good natural production is worth ten forced corrections.</div>
+  </div></div>`;
+}
+
+function quizHTML(){
+  const qs = QUIZ.map((q,i)=>{
+    const id=`qrev-${i}`;
+    const opts=q.opts.map(o=>`<div class="q-opt">${o}</div>`).join('');
+    const revealOpts=q.opts.map((o,ci)=>`<div class="qr-opt${ci===q.ans?' correct':''}">${o}</div>`).join('');
+    return `<div class="q-box">
+      <div class="q-num">Question ${i+1} of ${QUIZ.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-opts">${opts}</div>
+      <button class="q-reveal-btn" onclick="toggleAns(this,'${id}')">▼ 答えを見る</button>
+      <div class="q-ans-reveal" id="${id}">
+        <div class="qr-opts">${revealOpts}</div>
+        <div class="qr-hint">💡 ${q.hint}</div>
+      </div>
+    </div>`;
+  }).join('');
+  return `<div class="slide quizq-slide">
+  <div class="s-head" style="background:#311B92">Mini Quiz <span class="badge">Think first! 🤔</span></div>
+  <div class="s-body" style="flex-direction:column;gap:8px;overflow-y:auto">
+    <div class="think-banner">🤔 Answer in your head first, then press "答えを見る" to check!</div>
+    <div class="q-grid" style="padding-bottom:8px">${qs}</div>
+  </div></div>`;
+}
+
+function summaryHTML(){
+  const cards=[
+    {icon:'✋',title:'Unreleased stops',body:'p b t d k g at word end (before a consonant) = hold the position, no air burst. The mouth closes — that\'s the consonant.',color:'#4527A0'},
+    {icon:'ɾ',title:'T-flapping',body:'American /t/ between vowels = a quick soft tap. "water", "better", "city" — the /t/ sounds almost like /d/.',color:'#6A1B9A'},
+    {icon:'ʔ',title:'Glottal stop',body:'/t/ before a consonant or at phrase end can become a catch in the throat. Very common in casual speech.',color:'#311B92'},
+  ];
+  const cardHTML=cards.map(c=>`
+    <div class="sum-card" style="background:${c.color}">
+      <div class="sum-card-icon">${c.icon}</div>
+      <div class="sum-card-title">${c.title}</div>
+      <div class="sum-card-body">${c.body}</div>
+    </div>`).join('');
+  return `<div class="slide summary-slide">
+  <div class="s-head" style="background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.09)">
+    <span style="color:#fff">Summary — Final Consonants（語尾の発音）</span>
+    <span class="badge" style="background:rgba(255,255,255,.1);color:#CE93D8">Lesson Complete 🎉</span>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:16px 26px">
+    <div class="sum-cards">${cardHTML}</div>
+    <div class="sum-foot">
+      <strong>Practice tip:</strong> Listen to any English podcast or TV show and focus on final consonants. Notice: are they releasing the /t/ and /d/ cleanly, or holding/flapping them? You'll start hearing the difference everywhere!
+    </div>
+  </div></div>`;
+}
+
+function freeConvHTML(){
+  return `<div class="slide freeconv-slide">
+  <div class="s-head" style="background:#0f0520;border-top:2px solid rgba(149,117,205,.35)">
+    <span style="color:#CE93D8">💬 Free Conversation</span>
+    <span class="badge" style="background:rgba(69,39,160,.2);color:#CE93D8">8 min — Student leads!</span>
+  </div>
+  <div class="fc-body">
+    <div class="fc-badge">Today's Topic</div>
+    <div class="fc-topic">Best Meal Ever</div>
+    <div class="fc-questions">
+      <div class="fc-q">😋 What is the best thing you've ever eaten? Where was it, and what made it so special?</div>
+      <div class="fc-q">🌍 Have you ever tried a food abroad that you couldn't find back home? What was it like?</div>
+      <div class="fc-q">👨‍🍳 Is there a dish you've eaten that you've never been able to recreate or find again?</div>
+    </div>
+    <p class="fc-note">Topic naturally produces words rich in final /t/, /d/, /k/ sounds (best, great, good, liked, that, what, hot, cooked, etc.)</p>
+    <div class="fc-teacher">
+      <strong>Teacher guide:</strong> Listen for final consonant patterns — are they releasing /t/ clearly, or letting it be unreleased/flapped? Don't correct everything; just note 2–3 moments where the natural pattern would sound better, and model at the end. End by asking: "Which of the 3 patterns felt most natural to you?"
+    </div>
+  </div></div>`;
+}
+
+// ═══════════════════════════════════════════
+//  BUILD & NAV
+// ═══════════════════════════════════════════
+function build(){
+  const c=document.getElementById('slides');
+  let h=titleHTML()+warmupHTML()+conceptHTML()+spotHTML();
+  h+=tryit1HTML()+tryit2HTML()+roleplayHTML()+buildHTML();
+  h+=quizHTML()+summaryHTML()+freeConvHTML();
+  c.innerHTML=h;
+}
+
+function toggleAns(btn,id){
+  const el=document.getElementById(id);
+  const open=el.classList.toggle('open');
+  btn.textContent=open?'▲ 隠す':'▼ 答えを見る';
+}
+
+let cur=0,SL=[];
+function updateUI(){
+  SL=document.querySelectorAll('.slide');
+  SL.forEach((s,i)=>s.classList.toggle('active',i===cur));
+  document.getElementById('counter').textContent=`${cur+1} / ${SL.length}`;
+  document.getElementById('prevBtn').disabled=cur===0;
+  document.getElementById('nextBtn').disabled=cur===SL.length-1;
+  document.getElementById('progress').style.width=`${((cur+1)/SL.length)*100}%`;
+}
+function move(d){if(cur+d>=0&&cur+d<SL.length){cur+=d;updateUI();}}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')move(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')move(-1);
+});
+build();updateUI();
+</script>
+</body>
+</html>
